@@ -19,9 +19,11 @@ local function highlightEspFunction(highlightEsp)
             highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
         end
     else
-        for _,plrs in ipairs(game,Players:GetChildren()) do
-           if plrs:FindFirstChild("Highlight") then
-              plrs.Highlight:Destroy()
+        for _,chars in ipairs(game.Workspace:GetChildren()) do
+           if chars:IsA("Model") then
+              if chars:FindFirstChild("Humanoid") and chars:FindFirstChild("Highlight") then
+                 chars:FindFirstChild("Highlight"):Destroy()
+              end
            end
         end
     end
