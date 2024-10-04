@@ -1,2 +1,4 @@
-    local combat = getgenv().window:NewTab("Combat")
-    local combatSec = combat:NewSection("Combat")
+local libary = getgenv().libary
+local window = getgenv().window
+
+local combat = window:NewTab("Combat")
