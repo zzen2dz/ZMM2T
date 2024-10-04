@@ -6,34 +6,35 @@ local esp = window:NewTab("esp")
 local trolling = window:NewTab("trolling")
 local teleport = window:NewTab("Teleport")
 local autowin = window:NewTab("AutoWin")
-local highlightEsp = false
 
 
 
 -- esp
-local function highlightEspFunction()
+local function highlightEspFunction(highlightEsp)
     if highlightEsp == true then
-        for _,plrs in ipairs(game.Players:GetChildren()) do 
+        for _,plrs in ipairs(game.Players:GetChildren()) do
             local highlight = Instance.new("Highlight")
             highlight.Parent = plrs.Character
             highlight.FillColor = Color3.fromRGB(7, 255, 7)
             highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
         end
-
     else
-        for _,plrs in ipairs(game.Players:GetChildren()) do
-           plrs.Character:FindFirstChild("Highlight"):Destroy()
+        for _,plrs in ipairs(game,Players:GetChildren()) do
+           if plrs:FindFirstChild("Highlight") then
+              plrs.Highlight:Destroy()
+           end
         end
     end
 end
 local esp = esp:NewSection("Highlight Esp")
+local highlightEsp = false
 esp:NewToggle("HighlightEsp", "Highlight esp", function(state)
     if state then
         highlightEsp = true
-        highlightEspFunction()
+        highlightEspFunction(highlightEsp)
     else
         highlightEsp = false
-        highlightEspFunction()
+        highlightEspFunction(highlightEsp)
     end
 end)
 
