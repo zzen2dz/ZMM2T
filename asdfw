@@ -23,7 +23,10 @@ esp:NewToggle("HighlightEsp", "Highlight esp", function(state)
     else
         highlightEsp = false
         for _,plrs in pairs(game.Players:GetChildren()) do
-           plrs.Character:FindFirstChild("Highlight"):Destroy()
+           if plrs.Character:FindFirstChild("Highlight") == nil then
+           else
+            plrs.Character:FindFirstChild("Highlight"):Destroy()
+           end
         end
     end
 end)
