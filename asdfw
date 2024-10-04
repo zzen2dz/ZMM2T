@@ -2,3 +2,6 @@ local libary = getgenv().libary
 local window = getgenv().window
 
 local combat = window:NewTab("Combat")
+local esp = window:NewTab("esp")
+local trolling = window:NewTab("trolling")
+local teleport = window:NewTab("Teleport")
