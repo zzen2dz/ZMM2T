@@ -5,3 +5,8 @@ local combat = window:NewTab("Combat")
 local esp = window:NewTab("esp")
 local trolling = window:NewTab("trolling")
 local teleport = window:NewTab("Teleport")
+local autowin = window:NewTab("AutoWin")
+
+
+
+local autowinS = autowin:NewSection("Work in progress coming soon")
