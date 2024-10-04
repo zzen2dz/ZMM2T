@@ -12,19 +12,28 @@ local highlightEsp = false
 
 -- esp
 local function highlightEspFunction()
-   for _,plrs in ipairs(game.Players:GetChildren()) do 
-    local highlight = Instance.new("Highlight")
-    highlight.Parent = plrs.Character
-    highlight.FillColor = Color3.fromRGB(7, 255, 7)
-    highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-   end
+    if highlightEsp == true then
+        for _,plrs in ipairs(game.Players:GetChildren()) do 
+            local highlight = Instance.new("Highlight")
+            highlight.Parent = plrs.Character
+            highlight.FillColor = Color3.fromRGB(7, 255, 7)
+            highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+        end
+
+    else
+        for _,plrs in ipairs(game.Players:GetChildren()) do
+           plrs.Character:FindFirstChild("Highlight"):Destroy()
+        end
+    end
 end
 local esp = esp:NewSection("Highlight Esp")
 esp:NewToggle("HighlightEsp", "Highlight esp", function(state)
     if state then
+        highlightEsp = true
         highlightEspFunction()
     else
-        print("Toggle Off")
+        highlightEsp = false
+        highlightEspFunction()
     end
 end)
 
