@@ -1,68 +1,49 @@
-    local combat = window:NewTab("Combat")
-    local esp = window:NewTab("Visuals")
-    local trolling = window:NewTab("trolling")
-    local teleport = window:NewTab("Teleport")
-    local autowin = window:NewTab("AutoWin")
+local window = getgenv().window
+local combat = window:NewTab("Combat")
+local esp = window:NewTab("Visuals")
+local trolling = window:NewTab("trolling")
+local teleport = window:NewTab("Teleport")
+local autowin = window:NewTab("AutoWin")
 
-    -- esp
-    local espHighlight = false
-    local highlight = Instance.new("Highlight")
-    local function handleHighlightEsp()
-        if espHighlight == true then
+-- esp
+local espHighlight = false
+local highlight = Instance.new("Highlight")
+local function handleHighlightEsp()
+    if espHighlight == true then
+        for i, v in pairs(Players:GetPlayers()) do
+            local highlightClone = highlight:Clone()
+            repeat wait() until v.Character
+            highlightClone.Parent = v.Character
+        end
+        local pa;
+        pa = Players.PlayerAdded:Connect(function(player)
+            local highlightClone = highlight:Clone()
+            player.CharacterAdded:Wait()  -- Wait for character to be added
+            highlightClone.Parent = player.Character
+        end)
+        local rs;
+        rs = runService.Heartbeat:Connect(function()
             for i, v in pairs(Players:GetPlayers()) do
-                local highlightClone = highlight:Clone()
-                repeat wait() until v.Character
-                highlightClone.Parent = v.Character
-            end
-            local pa;
-            pa = Players.PlayerAdded:Connect(function(player)
-                local highlightClone = highlight:Clone()
-                player.CharacterAdded:Wait()  -- Wait for character to be added
-                highlightClone.Parent = player.Character
-            end)
-            local rs;
-            rs = runService.Heartbeat:Connect(function()
-                for i, v in pairs(Players:GetPlayers()) do
-                    if v.Character and not v.Character:FindFirstChild("Highlight") then
-                        local highlightClone = highlight:Clone()
-                        highlightClone.Parent = v.Character
-                        if espHighlight == false then 
-                           rs:Disconnect()
-                           pa:Disconnect()
-                           if v.Character and v.Character:FindFirstChild("Highlight") then
-                              v.Character.Highlight:Destroy()
-                           end
-                        end
+                if v.Character and not v.Character:FindFirstChild("Highlight") then
+                    local highlightClone = highlight:Clone()
+                    highlightClone.Parent = v.Character
+                    if espHighlight == false then 
+                       rs:Disconnect()
+                       pa:Disconnect()
+                       if v.Character and v.Character:FindFirstChild("Highlight") then
+                          v.Character.Highlight:Destroy()
+                       end
                     end
                 end
-            end)   
-        else
-            espHighlight = false
-            task.wait(0.5)
-            for i, v in pairs(Players:GetPlayers()) do
-                if v.Character:FindFirstChild("HumanoidRootPart") then
-                    v.Character.Highlight:Destroy()
-                end
+            end
+        end)   
+    else
+        espHighlight = false
+        task.wait(0.5)
+        for i, v in pairs(Players:GetPlayers()) do
+            if v.Character:FindFirstChild("HumanoidRootPart") then
+                v.Character.Highlight:Destroy()
             end
         end
     end
-
-
-
-    local esp = esp:NewSection("Highlight Esp: team/enemey esp less buggy")
-    esp:NewToggle("HighlightEsp all", "Highlight esp all", function(state)
-        espHighlight = state 
-        handleEsp()
-        task.wait(1)
-        if espHighlight == false then
-            for i, v in pairs(Players:GetPlayers()) do
-                if v.Character:FindFirstChild("HumanoidRootPart") then
-                    v.Character.Highlight:Destroy()
-                end
-            end
-        end
-    end)
-
-
-
-    local autowinS = autowin:NewSection("Work in progress coming soon")
+end
